@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -16,6 +17,7 @@ import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
  * Created by piotr on 19.06.2016.
  */
 public class SplashScreen extends Activity {
+    private String TAG = "pbBilu.SplashScreen";
     public static boolean internetConnection;
     private static int SPLASH_SCREEN_DELAY = 3000;
 
@@ -24,6 +26,7 @@ public class SplashScreen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -37,6 +40,7 @@ public class SplashScreen extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG, "run: ");
 //                intent = new Intent(SplashScreen.this, PersonListActivity.class);
                 intent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(intent);
@@ -46,6 +50,7 @@ public class SplashScreen extends Activity {
     }
 
     private boolean haveNetworkConnection() {
+        Log.d(TAG, "haveNetworkConnection: ");
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
 

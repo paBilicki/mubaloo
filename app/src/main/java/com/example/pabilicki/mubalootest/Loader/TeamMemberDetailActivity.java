@@ -15,7 +15,7 @@ public class TeamMemberDetailActivity extends Activity {
     private TextView tvCeo, tvTeamName, tvTeamMemberName, tvTeamMemberRole;
     private ImageView teamLogo, profileImg, cptArmband;
     private String ceo, teamName, teamMemberName, teamMemberRole;
-
+    private String TAG = "pbBilu.TeamMemberDetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

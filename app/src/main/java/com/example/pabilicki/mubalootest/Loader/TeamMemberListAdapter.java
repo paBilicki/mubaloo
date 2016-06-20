@@ -1,6 +1,7 @@
 package com.example.pabilicki.mubalootest.Loader;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.List;
 public class TeamMemberListAdapter extends ArrayAdapter<TeamMember> {
 
     private LayoutInflater mLayoutInflater;
+    private String TAG = "pbBilu.TeamMemberListAdapter";
 
     public TeamMemberListAdapter(Context context) {
 //        super(context, R.layout.row_item);
@@ -28,6 +30,7 @@ public class TeamMemberListAdapter extends ArrayAdapter<TeamMember> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "getView: ");
         ViewHolder viewHolder;
 
         if (convertView == null) {

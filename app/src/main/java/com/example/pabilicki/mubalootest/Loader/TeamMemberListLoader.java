@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
 import com.example.pabilicki.mubalootest.DataStructure.DataModel;
+import com.example.pabilicki.mubalootest.DataStructure.Team;
 import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
 import com.example.pabilicki.mubalootest.SplashScreen;
 
@@ -20,10 +21,10 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.MalformedInputException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TeamMemberListLoader extends AsyncTaskLoader<List<TeamMember>> {
+public class TeamMemberListLoader extends AsyncTaskLoader<ArrayList<Team>> {
     private String TAG = "pbBilu.TeamMemberListLoader";
 
     public TeamMemberListLoader(Context context) {
@@ -31,7 +32,8 @@ public class TeamMemberListLoader extends AsyncTaskLoader<List<TeamMember>> {
     }
 
     @Override
-    public List<TeamMember> loadInBackground() {
+    public ArrayList<Team> loadInBackground() {
+        ArrayList<Team> result = new ArrayList<>();
         try {
             JSONArray fetchedJson = new JSONArray();
 
@@ -58,21 +60,24 @@ public class TeamMemberListLoader extends AsyncTaskLoader<List<TeamMember>> {
             if (SplashScreen.internetConnection) {
                 BackupSQL.saveToSQL();
             }
-            List<TeamMember> result = fetchedData.getAllTeams().get(0).getMembers();
+
             result.add(0, fetchedData.getCeo());
-
-
-            for (int j = 0; j < fetchedData.getAllTeams().get(1).getMembers().size() - 1; j++) {
-                result.add(fetchedData.getAllTeams().get(1).getMembers().get(j));
+            for (int i = 0; i < fetchedData.getAllTeams().size()-1 ; i++) {
+                result.add(fetchedData.getAllTeams().get(i));
             }
 
-            for (int j = 0; j < fetchedData.getAllTeams().get(2).getMembers().size() - 1; j++) {
-                result.add(fetchedData.getAllTeams().get(2).getMembers().get(j));
-            }
 
-            for (int j = 0; j < fetchedData.getAllTeams().get(3).getMembers().size() - 1; j++) {
-                result.add(fetchedData.getAllTeams().get(3).getMembers().get(j));
-            }
+//            for (int j = 0; j < fetchedData.getAllTeams().get(1).getMembers().size() - 1; j++) {
+//                result.add(fetchedData.getAllTeams().get(1).getMembers().get(j));
+//            }
+//
+//            for (int j = 0; j < fetchedData.getAllTeams().get(2).getMembers().size() - 1; j++) {
+//                result.add(fetchedData.getAllTeams().get(2).getMembers().get(j));
+//            }
+//
+//            for (int j = 0; j < fetchedData.getAllTeams().get(3).getMembers().size() - 1; j++) {
+//                result.add(fetchedData.getAllTeams().get(3).getMembers().get(j));
+//            }
 
             return result;
         } catch (JSONException e) {

@@ -280,6 +280,5 @@ public final class BackupSQL {
 
     public static void setDbPath(String path) {
         dbPath = "/" + path + "/";
-        Log.d(TAG, "setDbPath: "+ dbPath);
     }
 }

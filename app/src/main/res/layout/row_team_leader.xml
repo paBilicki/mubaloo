@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorTeamLeaderRow"
+    android:gravity="center_vertical|center|center_horizontal"
+    android:paddingLeft="80dp">
+
+
+    <TextView
+        android:id="@+id/tv_team_leader_name"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:text="Olly Berry"
+        android:textColor="@color/colorMainFont"
+        android:textSize="30sp"
+        android:textStyle="bold|italic" />
+
+    <ImageView
+        android:id="@+id/img_cpt_armband"
+        android:layout_marginRight="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+
+        android:src="@drawable/cpt_armband" />
+</LinearLayout>
