@@ -50,10 +50,8 @@ public class DataModel {
         allTeams.add(team);
     }
 
-    public Team getCeo() throws JSONException {
-        Team ceoTeam = new CeoTeam();
-        ceoTeam.addMember(ceo);
-        return ceoTeam;
+    public Ceo getCeo() throws JSONException {
+        return ceo;
 
     }
 
