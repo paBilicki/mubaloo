@@ -10,12 +10,16 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
+
 /**
  * Created by piotr on 19.06.2016.
  */
 public class SplashScreen extends Activity {
     public static boolean internetConnection;
     private static int SPLASH_SCREEN_DELAY = 3000;
+
+    private String dbPath;
     Intent intent;
 
     @Override
@@ -27,11 +31,14 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.mubaloo_splash_screen);
 
         internetConnection = haveNetworkConnection();
+        dbPath = getApplicationInfo().dataDir;
+        BackupSQL.setDbPath(dbPath);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                intent = new Intent(SplashScreen.this, PersonListActivity.class);
+//                intent = new Intent(SplashScreen.this, PersonListActivity.class);
+                intent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
 import android.util.Log;
 
+import com.example.pabilicki.mubalootest.SplashScreen;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +23,8 @@ public final class BackupSQL {
     private static ArrayList<Team> allTeams;
     private static Ceo ceo;
     private static boolean dbExists = true;
-    private static String dbPath = "/data/data/apps101.example.json/";
+
+    public static String dbPath = null;
     private static String dbName = "Mubaloo.db";
 
 
@@ -230,7 +233,6 @@ public final class BackupSQL {
         JSONObject jsonAllTeams = new JSONObject();
         return jsonTeam;
     }
-    // DZIAŁA!!!
 
 
 
@@ -274,5 +276,10 @@ public final class BackupSQL {
 
     public static boolean isDbExists() {
         return dbExists;
+    }
+
+    public static void setDbPath(String path) {
+        dbPath = "/" + path + "/";
+        Log.d(TAG, "setDbPath: "+ dbPath);
     }
 }
