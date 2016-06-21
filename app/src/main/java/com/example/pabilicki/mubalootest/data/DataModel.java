@@ -8,14 +8,19 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by piotr on 17.06.2016.
- */
+/*
+* @see
+*
+* */
 public class DataModel {
+    private static final String KEY_MEMBERS = "members";
+    public static final String KEY_TEAM_NAME = "teamName";
+    public static final String PARAM_CEO = "ceo";
+    public static final String PARAM_TEAM_MEMBER_SERIALIZABLE = "teamMember";
+
     private JSONArray data;
     private ArrayList<Team> allTeams = new ArrayList<>();
     private Ceo ceo;
-    private String TAG = "pbBilu.DataModel";
 
     public DataModel(JSONArray data) throws JSONException {
         this.data = data;
@@ -23,27 +28,31 @@ public class DataModel {
         parsingTeams();
     }
 
+
     private void parsingCeo() throws JSONException {
         ceo = new Ceo(data.getJSONObject(0));
-        Log.d(TAG, "parsingCeo: " + ceo.getFirstName() + " " + ceo.getLastName());
     }
 
     private void parsingTeams() throws JSONException {
         for (int i = 1; i < data.length(); i++) {
             JSONObject teamData = data.getJSONObject(i);
-            String teamName = teamData.getString("teamName");
-            Log.d(TAG, "parsingTeams: " + teamName);
+            String teamName = teamData.getString(KEY_TEAM_NAME);
             parsingPeople(teamName, teamData);
         }
     }
 
+    /**
+     * @doc
+     * @param teamName
+     * @param teamData
+     * @throws JSONException
+     */
     private void parsingPeople(String teamName, JSONObject teamData) throws JSONException {
-        JSONArray members = teamData.getJSONArray("members");
+        JSONArray members = teamData.getJSONArray(KEY_MEMBERS);
         Team team = new Team(teamName);
 
         for (int j = 0; j < members.length(); j++) {
             TeamMember teamMember = new TeamMember(members.getJSONObject(j));
-//            Log.d(TAG, "parsingPeople: " + j + " " + teamMember.getFirstName() + " " + teamMember.getLastName());
             team.addMember(teamMember);
         }
         allTeams.add(team);

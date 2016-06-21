@@ -8,6 +8,11 @@ import java.util.ArrayList;
  * Created by piotr on 17.06.2016.
  */
 public class Team {
+    public static final String TEAM_IOS = "iOS";
+    public static final String TEAM_ANDROID = "Android";
+    public static final String TEAM_WEB = "Web";
+    public static final String TEAM_DESIGN = "Design";
+
     private String teamName;
     private ArrayList<TeamMember> members;
 

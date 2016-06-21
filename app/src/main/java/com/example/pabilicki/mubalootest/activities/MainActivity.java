@@ -33,14 +33,12 @@ public class MainActivity extends BaseActionBarActivity implements LoaderManager
     private List<String> teamName = new ArrayList<>();
     private HashMap<String, List<TeamMember>> teamMembers = new HashMap<>();
     private Ceo ceo;
-    private String TAG = "pbBilu.MainActivity";
     ExpandableListView expListView;
     ExpandableListAdapter mListAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: ");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
@@ -99,9 +97,9 @@ public class MainActivity extends BaseActionBarActivity implements LoaderManager
                 } else {
                     Intent intent = new Intent(MainActivity.this, TeamMemberDetailActivity.class);
 
-                    intent.putExtra(TeamMemberDetailActivity.KEY_CEO, ceo.getFirstName() + " " + ceo.getLastName());
-                    intent.putExtra(TeamMemberDetailActivity.KEY_TEAM_NAME, teamName.get(groupPosition));
-                    intent.putExtra(TeamMemberDetailActivity.KEY_TEAM_MEMBER_SERIALIZABLE, teamMember);
+                    intent.putExtra(DataModel.PARAM_CEO, ceo.getFirstName() + " " + ceo.getLastName());
+                    intent.putExtra(DataModel.KEY_TEAM_NAME, teamName.get(groupPosition));
+                    intent.putExtra(DataModel.PARAM_TEAM_MEMBER_SERIALIZABLE, teamMember);
 
                     startActivity(intent);
                 }
@@ -114,7 +112,6 @@ public class MainActivity extends BaseActionBarActivity implements LoaderManager
 
     @Override
     public Loader<DataModel> onCreateLoader(int i, Bundle bundle) {
-        Log.d(TAG, "onCreateLoader: ");
         return new TeamListLoader(MainActivity.this);
     }
 
@@ -122,7 +119,6 @@ public class MainActivity extends BaseActionBarActivity implements LoaderManager
     public void onLoadFinished(Loader<DataModel> loader, DataModel dataModel) {
 
         List<Team> teams = dataModel.getAllTeams();
-        Log.d(TAG, "onLoadFinished: teams: " + teams.size());
 
         mListAdapter.setData(teams);
         expListView.setAdapter(mListAdapter);
@@ -141,7 +137,6 @@ public class MainActivity extends BaseActionBarActivity implements LoaderManager
 
     @Override
     public void onLoaderReset(Loader<DataModel> loader) {
-        Log.d(TAG, "onLoaderReset: ");
         mListAdapter.setData(new ArrayList<Team>());
     }
 }

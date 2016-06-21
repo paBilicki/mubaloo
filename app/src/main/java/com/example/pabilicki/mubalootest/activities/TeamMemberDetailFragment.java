@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.pabilicki.mubalootest.R;
+import com.example.pabilicki.mubalootest.data.DataModel;
 import com.example.pabilicki.mubalootest.data.TeamMember;
 
 /**
@@ -22,7 +23,6 @@ public class TeamMemberDetailFragment extends Fragment {
     private String teamMemberName, teamMemberRole, teamMemberURL, teamMemberDescription;
     private LinearLayout memberDetailedRow, memberDetailedDescription;
     private TeamMember teamMember;
-    private String TAG = "pbBilu.TeamMemberDetailFragment";
     private static final String PLACEHOLDER_URL = "http://developers.mub.lu/resources/profilePlaceholder.png";
 
     @Nullable
@@ -34,7 +34,7 @@ public class TeamMemberDetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (teamMember != null) {
-            outState.putSerializable(TeamMemberDetailActivity.KEY_TEAM_MEMBER_SERIALIZABLE, teamMember);
+            outState.putSerializable(DataModel.PARAM_TEAM_MEMBER_SERIALIZABLE, teamMember);
         }
         super.onSaveInstanceState(outState);
     }
@@ -56,8 +56,8 @@ public class TeamMemberDetailFragment extends Fragment {
         TeamMember lastDisplay = null;
 
         // Restoring last team member
-        if ((savedInstanceState != null) && (savedInstanceState.containsKey(TeamMemberDetailActivity.KEY_TEAM_MEMBER_SERIALIZABLE))) {
-            lastDisplay = (TeamMember) savedInstanceState.getSerializable(TeamMemberDetailActivity.KEY_TEAM_MEMBER_SERIALIZABLE);
+        if ((savedInstanceState != null) && (savedInstanceState.containsKey(DataModel.PARAM_TEAM_MEMBER_SERIALIZABLE))) {
+            lastDisplay = (TeamMember) savedInstanceState.getSerializable(DataModel.PARAM_TEAM_MEMBER_SERIALIZABLE);
             populateFragment(lastDisplay);
         }
     }

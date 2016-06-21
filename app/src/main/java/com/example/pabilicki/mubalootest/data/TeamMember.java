@@ -9,6 +9,12 @@ import java.io.Serializable;
  * Created by piotr on 17.06.2016.
  */
 public class TeamMember extends JSONObject implements Serializable {
+    private final static String KEY_ID = "id";
+    private final static String KEY_FIRST_NAME ="firstName";
+    private final static String KEY_LAST_NAME = "lastName";
+    private final static String KEY_ROLE = "role";
+    private final static String KEY_TEAM_LEAD = "Team Lead";
+    private final static String KEY_PROFILE_IMG_URL = "profileImageURL";
     private String id;
     private String firstName;
     private String lastName;
@@ -18,14 +24,14 @@ public class TeamMember extends JSONObject implements Serializable {
     private boolean teamLead = false;
 
     public TeamMember(JSONObject member) throws JSONException {
-        this.id = member.getString("id");
-        this.firstName = member.getString("firstName");
-        this.lastName = member.getString("lastName");
-        this.role = member.getString("role");
-        if (role.contains("Team Lead")){
+        this.id = member.getString(KEY_ID);
+        this.firstName = member.getString(KEY_FIRST_NAME);
+        this.lastName = member.getString(KEY_LAST_NAME);
+        this.role = member.getString(KEY_ROLE);
+        if (role.contains(KEY_TEAM_LEAD)){
             this.teamLead = true;
         }
-        this.profileImageURL = member.getString("profileImageURL");
+        this.profileImageURL = member.getString(KEY_PROFILE_IMG_URL);
     }
 
     public String getId() {

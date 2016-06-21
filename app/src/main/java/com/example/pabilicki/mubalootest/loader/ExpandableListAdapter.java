@@ -2,7 +2,6 @@ package com.example.pabilicki.mubalootest.loader;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,34 +18,28 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-    private String TAG = "pbBilu.ExpandableListAdapter";
-
     private Context context;
     private List<String> teamName = new ArrayList<>();
     private HashMap<String, List<TeamMember>> teamMembers = new HashMap<>();
 
     public ExpandableListAdapter(Context context) {
-        Log.d(TAG, "ExpandableListAdapter: constructor");
         this.context = context;
     }
 
     @Override
     public TeamMember getChild(int groupPosition, int childPosititon) {
-        Log.d(TAG, "getChild: ");
         return this.teamMembers.get(teamName.get(groupPosition))
                 .get(childPosititon);
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-//        Log.d(TAG, "getChildId: ");
         return childPosition;
     }
 
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        Log.d(TAG, "getChildView: " + groupPosition + "/" + childPosition);
         TeamMember child = getChild(groupPosition, childPosition);
         final String teamMemberText = child.getFirstName() + " " + child.getLastName();
         TextView tvTeamMember = null;
@@ -61,7 +54,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
             tvTeamMember = (TextView) convertView.findViewById(R.id.tv_team_member_name);
 
-            if (getChild(groupPosition, childPosition).getRole().contains("Team Lead")) {
+            if (getChild(groupPosition, childPosition).isTeamLead()) {
 
                 convertView = inflater.inflate(R.layout.row_team_leader, null);
                 convertView.setTag(child.getRole());
@@ -70,7 +63,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         } else {
 
-            if (getChild(groupPosition, childPosition).getRole().contains("Team Lead")) {
+            if (getChild(groupPosition, childPosition).isTeamLead()) {
                 if (!getChild(groupPosition, childPosition).getRole().equals(convertView.getTag())) {
                     convertView = inflater.inflate(R.layout.row_team_leader, null);
                     convertView.setTag(child.getRole());
@@ -90,34 +83,29 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-//        Log.d(TAG, "getChildrenCount: ");
         return this.teamMembers.get(this.teamName.get(groupPosition))
                 .size();
     }
 
     @Override
     public String getGroup(int groupPosition) {
-//        Log.d(TAG, "getGroup: ");
         return this.teamName.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-//        Log.d(TAG, "getGroupCount: ");
 
         return this.teamMembers.size();
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-//        Log.d(TAG, "getGroupId: ");
         return groupPosition;
     }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        Log.d(TAG, "getGroupView: ");
         String teamName = getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
@@ -125,17 +113,40 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.row_team, null);
         }
         ImageView imgTeamLogo = (ImageView) convertView.findViewById(R.id.img_team_logo);
-        if (teamName.equals("iOS")) {
-            imgTeamLogo.setImageResource(R.drawable.logo_ios);
-        } else if (teamName.equals("Android")) {
-            imgTeamLogo.setImageResource(R.drawable.logo_android);
-        } else if (teamName.equals("Web")) {
-            imgTeamLogo.setImageResource(R.drawable.logo_web);
-        } else if (teamName.equals("Design")) {
-            imgTeamLogo.setImageResource(R.drawable.logo_design);
-        } else {
-            imgTeamLogo.setImageResource(R.drawable.logo_placeholder);
+        switch (teamName){
+            case Team.TEAM_IOS:
+                imgTeamLogo.setImageResource(R.drawable.logo_ios);
+                break;
+
+            case Team.TEAM_ANDROID:
+                imgTeamLogo.setImageResource(R.drawable.logo_android);
+                break;
+
+            case Team.TEAM_WEB:
+                imgTeamLogo.setImageResource(R.drawable.logo_web);
+                break;
+
+            case Team.TEAM_DESIGN:
+                imgTeamLogo.setImageResource(R.drawable.logo_design);
+                break;
+
+            default:
+                imgTeamLogo.setImageResource(R.drawable.logo_placeholder);
+                break;
         }
+
+
+//        if (teamName.equals(Team.TEAM_IOS)) {
+//            imgTeamLogo.setImageResource(R.drawable.logo_ios);
+//        } else if (teamName.equals(Team.TEAM_ANDROID)) {
+//            imgTeamLogo.setImageResource(R.drawable.logo_android);
+//        } else if (teamName.equals(Team.TEAM_WEB)) {
+//            imgTeamLogo.setImageResource(R.drawable.logo_web);
+//        } else if (teamName.equals(Team.TEAM_DESIGN)) {
+//            imgTeamLogo.setImageResource(R.drawable.logo_design);
+//        } else {
+//            imgTeamLogo.setImageResource(R.drawable.logo_placeholder);
+//        }
 
         TextView tvTeamName = (TextView) convertView.findViewById(R.id.tv_team_name);
         tvTeamName.setText(teamName);
@@ -145,19 +156,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean hasStableIds() {
-//        Log.d(TAG, "hasStableIds: ");
         return false;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-//        Log.d(TAG, "isChildSelectable: " + groupPosition + "/" + childPosition);
         return true;
     }
 
     public void setData(List<Team> teams) {
         for (Team t : teams) {
-            Log.d(TAG, "setData: " + t.getTeamName());
             teamName.add(t.getTeamName());
             teamMembers.put(t.getTeamName(), t.getMembers());
         }
