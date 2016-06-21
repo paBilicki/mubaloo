@@ -1,12 +1,15 @@
 package com.example.pabilicki.mubalootest;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -48,6 +51,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        ActionBar mActionBar = getActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+        mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+
         expListView = (ExpandableListView) findViewById(R.id.lv_expandable);
         if (findViewById(R.id.team_member_detail_container) != null) {
             teamMemberDetailFragment = new TeamMemberDetailFragment();
@@ -55,9 +68,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     .add(R.id.team_member_detail_container, teamMemberDetailFragment)
                     .commit();
         }
+
         mListAdapter = new ExpandableListAdapter(MainActivity.this);
-
-
         getSupportLoaderManager().initLoader(1, null, this).forceLoad();
 
         mHandler.post(new Runnable() {

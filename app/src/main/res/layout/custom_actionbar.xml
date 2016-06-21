@@ -9,9 +9,10 @@
     <ImageView
         android:id="@+id/img_view_actionbar"
         android:layout_height="50dp"
+        android:layout_width="wrap_content"
         android:layout_centerVertical="true"
-        android:src="@drawable/action_bar"
-        android:layout_width="wrap_content" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/action_bar" />
 
 
 </RelativeLayout>

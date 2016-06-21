@@ -75,6 +75,7 @@ public class TeamMemberDetailFragment extends Fragment {
     }
 
     public void showDetails() {
+
         memberDetailedRow.setVisibility(View.VISIBLE);
         memberDetailedDescription.setVisibility(View.VISIBLE);
     }
