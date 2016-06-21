@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
 import com.example.pabilicki.mubalootest.DataStructure.DataModel;
-import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
+import com.example.pabilicki.mubalootest.DataStructure.Team;
 import com.example.pabilicki.mubalootest.SplashScreen;
 
 import org.json.JSONArray;
@@ -23,15 +23,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.MalformedInputException;
 import java.util.List;
 
-public class TeamMemberListLoader extends AsyncTaskLoader<List<TeamMember>> {
-    private String TAG = "pbBilu.TeamMemberListLoader";
+public class TeamListLoader extends AsyncTaskLoader<List<Team>> {
+    private String TAG = "pbBilu.TeamListLoader";
 
-    public TeamMemberListLoader(Context context) {
+    public TeamListLoader(Context context) {
         super(context);
     }
 
     @Override
-    public List<TeamMember> loadInBackground() {
+    public List<Team> loadInBackground() {
         try {
             JSONArray fetchedJson = new JSONArray();
 
@@ -58,22 +58,7 @@ public class TeamMemberListLoader extends AsyncTaskLoader<List<TeamMember>> {
             if (SplashScreen.internetConnection) {
                 BackupSQL.saveToSQL();
             }
-            List<TeamMember> result = fetchedData.getAllTeams().get(0).getMembers();
-            result.add(0, fetchedData.getCeo());
-
-
-            for (int j = 0; j < fetchedData.getAllTeams().get(1).getMembers().size() - 1; j++) {
-                result.add(fetchedData.getAllTeams().get(1).getMembers().get(j));
-            }
-
-            for (int j = 0; j < fetchedData.getAllTeams().get(2).getMembers().size() - 1; j++) {
-                result.add(fetchedData.getAllTeams().get(2).getMembers().get(j));
-            }
-
-            for (int j = 0; j < fetchedData.getAllTeams().get(3).getMembers().size() - 1; j++) {
-                result.add(fetchedData.getAllTeams().get(3).getMembers().get(j));
-            }
-
+            List<Team> result = fetchedData.getAllTeams();
             return result;
         } catch (JSONException e) {
             e.getMessage();

@@ -9,19 +9,22 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
+import com.example.pabilicki.mubalootest.DataStructure.Team;
+import com.example.pabilicki.mubalootest.ExpandableListAdapter;
 
 import java.util.List;
 
-public class TeamMemberListFragment extends ListFragment implements
-        LoaderManager.LoaderCallbacks<List<TeamMember>> {
-    private TeamMemberListAdapter mListAdapter;
+public class TeamListFragment extends ListFragment implements
+        LoaderManager.LoaderCallbacks<List<Team>> {
+    private ExpandableListAdapter mListAdapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new TeamMemberListAdapter(getActivity());
-        setListAdapter(mListAdapter);
+       // mListAdapter = new ExpandableListAdapter(getContext(), teams);
+        //setListAdapter(mListAdapter);
+
     }
 
     @Override
@@ -35,9 +38,11 @@ public class TeamMemberListFragment extends ListFragment implements
     }
 
     @Override
-    public void onLoadFinished(Loader<List<TeamMember>> listLoader, List<TeamMember> teamMembers) {
+    public void onLoadFinished(Loader<List<Team>> listLoader, List<Team> teams) {
         // our loader got results back so lets set the data
-        mListAdapter.setData(teamMembers);
+
+
+        mListAdapter.setData(teams);
 
         if (isResumed()) {
             setListShown(true);
@@ -54,13 +59,13 @@ public class TeamMemberListFragment extends ListFragment implements
     }
 
     @Override
-    public Loader<List<TeamMember>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<Team>> onCreateLoader(int i, Bundle bundle) {
         // call our loader to load json objects over the internet
-        return new TeamMemberListLoader(getActivity());
+        return new TeamListLoader(getActivity());
     }
 
     @Override
-    public void onLoaderReset(Loader<List<TeamMember>> listLoader) {
+    public void onLoaderReset(Loader<List<Team>> listLoader) {
     }
 
 

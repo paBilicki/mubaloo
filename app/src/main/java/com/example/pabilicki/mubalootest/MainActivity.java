@@ -1,13 +1,11 @@
 package com.example.pabilicki.mubalootest;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -15,157 +13,138 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
+import com.example.pabilicki.mubalootest.DataStructure.Ceo;
+import com.example.pabilicki.mubalootest.DataStructure.Team;
+import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
+import com.example.pabilicki.mubalootest.Loader.TeamListLoader;
 import com.example.pabilicki.mubalootest.Loader.TeamMemberDetailActivity;
-import com.example.pabilicki.mubalootest.Loader.TeamMemberListFragment;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Team>> {
     private String TAG = "pbBilu.MainActivity";
-    ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    private List<String> teamName = new ArrayList<>();
+    private HashMap<String, List<TeamMember>> teamMembers = new HashMap<>();
+    private Ceo ceo;
+    ExpandableListAdapter mListAdapter;
+    private final Handler mHandler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
         Toast.makeText(MainActivity.this, "Internet Connection:" + SplashScreen.internetConnection, Toast.LENGTH_SHORT).show();
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new TeamMemberListFragment())
-                    .commit();
-        }
-        // get the listview
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
+
         expListView = (ExpandableListView) findViewById(R.id.lv_expandable);
+//        mListAdapter = new ExpandableListAdapter(this, new ArrayList<Team>());
+        mListAdapter = new ExpandableListAdapter(MainActivity.this);
+//        expListView.setAdapter(mListAdapter);
 
-        // preparing list data
-        prepareListData();
+        getSupportLoaderManager().initLoader(1, null, this).forceLoad();
 
+        mHandler.post(new Runnable() {
+            public void run() {
+                expListView.setOnGroupClickListener(new OnGroupClickListener() {
 
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
+                    @Override
+                    public boolean onGroupClick(ExpandableListView parent, View v,
+                                                int groupPosition, long id) {
+//                        Toast.makeText(getApplicationContext(),
+//                                "Group Clicked " + teamName.get(groupPosition),
+//                                Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                });
 
-        // Listview Group click listener
-        expListView.setOnGroupClickListener(new OnGroupClickListener() {
+                // Listview Group expanded listener
+                expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
 
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                 Toast.makeText(getApplicationContext(),
-                 "Group Clicked " + listDataHeader.get(groupPosition),
-                 Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+                    @Override
+                    public void onGroupExpand(int groupPosition) {
+//                        Toast.makeText(getApplicationContext(),
+//                                teamName.get(groupPosition) + " Expanded",
+//                                Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-        // Listview Group expanded listener
-        expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
+                // Listview Group collasped listener
+                expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
 
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onGroupCollapse(int groupPosition) {
+//                        Toast.makeText(getApplicationContext(),
+//                                teamName.get(groupPosition) + " Collapsed",
+//                                Toast.LENGTH_SHORT).show();
 
-        // Listview Group collasped listener
-        expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
+                    }
+                });
 
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
+                // Listview on child click listener
+                expListView.setOnChildClickListener(new OnChildClickListener() {
 
-            }
-        });
-
-        //set listAdapter
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-        expListView.setAdapter(listAdapter);
-
-        // Listview on child click listener
-        expListView.setOnChildClickListener(new OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
+                    @Override
+                    public boolean onChildClick(ExpandableListView parent, View v,
+                                                int groupPosition, int childPosition, long id) {
 
 
-                Intent intent = new Intent(MainActivity.this, TeamMemberDetailActivity.class);
+                        Intent intent = new Intent(MainActivity.this, TeamMemberDetailActivity.class);
 
-                intent.putExtra("ceo", "Mark Manson");
-                intent.putExtra("teamName", "Android");
-                intent.putExtra("teamMemberName", "Olly Berry");
-                intent.putExtra("teamMemberRole", "Android Team Lead");
+                        TeamMember teamMember = teamMembers.get(teamName.get(groupPosition)).get(childPosition);
+                        intent.putExtra("ceo", ceo.getFirstName() + " " + ceo.getLastName());
+                        intent.putExtra("teamName", teamName.get(groupPosition));
+                        intent.putExtra("Name", teamMember.getFirstName() + " " + teamMember.getLastName());
+                        intent.putExtra("Role", teamMember.getRole());
+                        intent.putExtra("ProfileImageURL", teamMember.getProfileImageURL());
+                        intent.putExtra("Description", teamMember.getDescription());
 
-                Toast.makeText(
-                        getApplicationContext(),
-                        listDataHeader.get(groupPosition)
-                                + " : "
-                                + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
-                return false;
-            }
-        });
+                        startActivity(intent);
+
+                        return false;
+                    }
+                });
+            }});
+
 
 
     }
 
-    /*
-     * Preparing the list data
-     */
-    private void prepareListData() {
-        Log.d(TAG, "prepareListData: ");
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+    @Override
+    public Loader<List<Team>> onCreateLoader(int i, Bundle bundle) {
+        Log.d(TAG, "onCreateLoader: ");
+        return new TeamListLoader(MainActivity.this);
+    }
 
-        // Adding child data
-        listDataHeader.add("iOS");
-        listDataHeader.add("Android");
-        listDataHeader.add("Web");
-        listDataHeader.add("Design");
+    @Override
+    public void onLoadFinished(Loader<List<Team>> loader, List<Team> teams) {
+//        mListAdapter = new ExpandableListAdapter(MainActivity.this, teams);
+        Log.d(TAG, "onLoadFinished: teams: " + teams.size());
+        mListAdapter.setData(teams);
+        expListView.setAdapter(mListAdapter);
+        for (Team t : teams) {
+            Log.d(TAG, "setData: " + t.getTeamName());
+            teamName.add(t.getTeamName());
+            teamMembers.put(t.getTeamName(), t.getMembers());
+        }
+        TextView tvCeo = (TextView)findViewById(R.id.tv_ceo_name);
+        ceo = BackupSQL.getCeo();
+        tvCeo.setText(ceo.getFirstName() + " " + ceo.getLastName());
 
-        // Adding child data
-        List<String> iOS = new ArrayList<String>();
-        iOS.add("Olly Berry");
-        iOS.add("James Frost");
-        iOS.add("Liam Nichols");
-        iOS.add("Chris Watson");
-        iOS.add("Richard Turton");
-        iOS.add("Matt Collis");
-        iOS.add("David Gibson");
-        iOS.add("Tom Guy");
+    }
 
-        List<String> Android = new ArrayList<String>();
-        Android.add("The Conjuring");
-        Android.add("Despicable Me 2");
-        Android.add("Turbo");
-        Android.add("Grown Ups 2");
-        Android.add("Red 2");
-
-        List<String> Web = new ArrayList<String>();
-        Web.add("2 Guns");
-        Web.add("The Smurfs 2");
-        Web.add("The Spectacular Now");
-
-
-        List<String> Design = new ArrayList<String>();
-        Design.add("2 Guns");
-        Design.add("The Smurfs 2");
-        Design.add("The Spectacular Now");
-
-        listDataChild.put(listDataHeader.get(0), iOS); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), Android);
-        listDataChild.put(listDataHeader.get(2), Web);
-        listDataChild.put(listDataHeader.get(3), Design);
+    @Override
+    public void onLoaderReset(Loader<List<Team>> loader) {
+        Log.d(TAG, "onLoaderReset: ");
+        mListAdapter.setData(new ArrayList<Team>());
     }
 }

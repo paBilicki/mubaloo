@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
 import android.util.Log;
 
-import com.example.pabilicki.mubalootest.SplashScreen;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -209,7 +207,7 @@ public final class BackupSQL {
                     teamMember.put("firstName", firstName);
                     teamMember.put("lastName", lastName);
                     teamMember.put("role", role);
-                    if (role.contains("Team Lead")){
+                    if (role.contains("Team Lead")) {
                         teamMember.put("teamLead", true);
                     }
                     teamMember.put("profileImageURL", profileImageURL);
@@ -233,7 +231,6 @@ public final class BackupSQL {
         JSONObject jsonAllTeams = new JSONObject();
         return jsonTeam;
     }
-
 
 
     // TODO: 19.06.2016 encapsulation of a stub that grabs data from db about CEO and each team member
@@ -278,7 +275,13 @@ public final class BackupSQL {
         return dbExists;
     }
 
+
     public static void setDbPath(String path) {
         dbPath = "/" + path + "/";
+    }
+
+
+    public static Ceo getCeo() {
+        return ceo;
     }
 }

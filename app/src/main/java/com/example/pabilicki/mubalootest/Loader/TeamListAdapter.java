@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pabilicki.mubalootest.DataStructure.Team;
 import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
 import com.example.pabilicki.mubalootest.R;
 
@@ -17,12 +18,12 @@ import java.util.List;
 /**
  * Created by piotr on 17.06.2016.
  */
-public class TeamMemberListAdapter extends ArrayAdapter<TeamMember> {
+public class TeamListAdapter extends ArrayAdapter<Team> {
 
     private LayoutInflater mLayoutInflater;
     private String TAG = "pbBilu.TeamMemberListAdapter";
 
-    public TeamMemberListAdapter(Context context) {
+    public TeamListAdapter(Context context) {
 //        super(context, R.layout.row_item);
         super(context, R.layout.row_team);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,9 +39,6 @@ public class TeamMemberListAdapter extends ArrayAdapter<TeamMember> {
             convertView = mLayoutInflater.inflate(R.layout.row_item, parent, false);
             // store our views in a viewholder because findviewbyid is expensive
             viewHolder = new ViewHolder();
-//            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
-//            viewHolder.idNr = (TextView) convertView.findViewById(R.id.id_nr);
-//            viewHolder.role = (TextView) convertView.findViewById(R.id.role);
             viewHolder.logo = (ImageView) convertView.findViewById(R.id.img_team_logo);
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
             convertView.setTag(viewHolder);
@@ -49,25 +47,23 @@ public class TeamMemberListAdapter extends ArrayAdapter<TeamMember> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        TeamMember teamMember = getItem(position);
-        if (teamMember != null) {
+        Team team = getItem(position);
+        if (team != null) {
             // set the text in our views
-//            viewHolder.name.setText(teamMember.getFirstName() + " " + teamMember.getLastName());
-//            viewHolder.idNr.setText(String.valueOf(teamMember.getId()));
-//            viewHolder.role.setText(teamMember.getRole());
+//
             viewHolder.logo.setImageResource(R.drawable.logo_android);
-            viewHolder.name.setText(teamMember.getFirstName() + " " + teamMember.getLastName());
+            viewHolder.name.setText(team.getTeamName());
 
         }
         return convertView;
     }
 
-    public void setData(List<TeamMember> data) {
+    public void setData(List<Team> data) {
         if (data != null) {
             clear();
             // we add each item individually instead of using addAll() for backward compatibility
-            for (TeamMember teamMember : data) {
-                add(teamMember);
+            for (Team team : data) {
+                add(team);
             }
         }
     }

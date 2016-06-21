@@ -68,7 +68,7 @@
             android:src="@drawable/logo_ios" />
 
         <TextView
-            android:id="@+id/tv_team_name"
+            android:id="@+id/tv_team_namec"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"

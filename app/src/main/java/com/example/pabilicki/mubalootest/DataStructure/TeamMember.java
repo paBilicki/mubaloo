@@ -12,6 +12,7 @@ public class TeamMember extends JSONObject {
     private String lastName;
     private String role;
     private String profileImageURL;
+    private String description;
     private boolean teamLead = false;
 
     public TeamMember(JSONObject member) throws JSONException {
@@ -46,8 +47,13 @@ public class TeamMember extends JSONObject {
         return profileImageURL;
     }
 
-    public boolean isTeamlead() {
-        return teamLead;
+    public String getDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Just few lines of description about a team member")
+                .append("that could have been fetched from a json file ")
+                .append("and added to the data structure ")
+                .append("in order to fill the space in the more detailed view.");
+        return sb.toString();
     }
 }
 

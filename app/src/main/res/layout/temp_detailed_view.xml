@@ -7,14 +7,14 @@
     android:orientation="vertical">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/my_custom_actionbar"
+        android:id="@+id/my_custom_actionbasr"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorActionbar">
 
 
         <ImageView
-            android:id="@+id/img_view_actionbar"
+            android:id="@+id/img_view_actionbard"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
@@ -30,7 +30,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_ceo_name"
+            android:id="@+id/tv_ceo_nasme"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:gravity="bottom|center_horizontal"
@@ -40,7 +40,7 @@
             android:textStyle="bold|italic" />
 
         <TextView
-            android:id="@+id/tv_ceo"
+            android:id="@+id/tv_ceow"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="top|center_horizontal"
@@ -57,7 +57,7 @@
         android:background="@color/colorTeamRow">
 
         <ImageView
-            android:id="@+id/img_team_logo"
+            android:id="@+id/img_team_log2o"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center"
@@ -68,7 +68,7 @@
             android:src="@drawable/logo_ios" />
 
         <TextView
-            android:id="@+id/tv_team_name"
+            android:id="@+id/tv_team_namea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -87,7 +87,7 @@
         android:background="@color/colorTeamLeaderRow">
 
         <ImageView
-            android:id="@+id/img_place_holder"
+            android:id="@+id/img_place_holdera"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center"
@@ -103,7 +103,7 @@
             android:textColor="@color/colorMainFont"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/tv_team_member_name"
+                android:id="@+id/tv_team_member_namea"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
@@ -115,7 +115,7 @@
                 android:textSize="30sp"
                 android:textStyle="bold|italic" />
             <TextView
-                android:id="@+id/tv_team_member_role"
+                android:id="@+id/tv_team_member_rolea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -130,7 +130,7 @@
 
 
         <ImageView
-            android:id="@+id/img_cpt_armband"
+            android:id="@+id/img_cpt_armbanda"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
