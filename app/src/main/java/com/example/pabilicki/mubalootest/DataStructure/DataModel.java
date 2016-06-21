@@ -21,7 +21,7 @@ public class DataModel {
         this.data = data;
         parsingCeo();
         parsingTeams();
-        BackupSQL.setAllTeams(allTeams, ceo);
+        BackupSQLold.setAllTeams(allTeams, ceo);
     }
 
     private void parsingCeo() throws JSONException {

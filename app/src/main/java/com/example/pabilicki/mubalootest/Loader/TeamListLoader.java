@@ -2,7 +2,6 @@ package com.example.pabilicki.mubalootest.Loader;
 
 
 import android.content.Context;
-import android.database.sqlite.SQLiteException;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
@@ -20,11 +19,11 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.MalformedInputException;
 import java.util.List;
 
 public class TeamListLoader extends AsyncTaskLoader<List<Team>> {
     private String TAG = "pbBilu.TeamListLoader";
+    private BackupSQL backupSQL;
 
     public TeamListLoader(Context context) {
         super(context);
@@ -33,33 +32,31 @@ public class TeamListLoader extends AsyncTaskLoader<List<Team>> {
     @Override
     public List<Team> loadInBackground() {
         try {
+            BackupSQL backupSQL = new BackupSQL(getContext());
             JSONArray fetchedJson = new JSONArray();
+            String jsonString;
 
             // Checking if there is Internet connection to decide between downloading json and
             // trying to get data from the database if it exists
-            if (SplashScreen.internetConnection) {
-                try {
-                    Log.d(TAG, "loadInBackground: from Internet");
-                    fetchedJson = new JSONArray(fetchingData());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else if (BackupSQL.isDbExists()) {
-                Log.d(TAG, "loadInBackground: from SQL ");
-                try {
-                    fetchedJson = BackupSQL.loadFromSQL();
-                } catch (SQLiteException e) {
-                    Log.d(TAG, "loadInBackground: sorry SQl problem: " + e.getMessage());
-                }
-            }
-            Log.d(TAG, "loadInBackground: Creating Data Model...");
-            DataModel fetchedData = new DataModel(fetchedJson);
 
             if (SplashScreen.internetConnection) {
-                BackupSQL.saveToSQL();
+                Log.d(TAG, "loadInBackground: from Internet");
+                jsonString = fetchingData();
+                backupSQL.insertNewJson(jsonString);
+            } else {
+                Log.d(TAG, "loadInBackground: from SQL ");
+                jsonString = backupSQL.getBackupJson();
             }
+
+            fetchedJson = new JSONArray(jsonString);
+
+            Log.d(TAG, "loadInBackground: Creating Data Model...");
+
+            DataModel fetchedData = new DataModel(fetchedJson);
+
             List<Team> result = fetchedData.getAllTeams();
             return result;
+
         } catch (JSONException e) {
             e.getMessage();
         }

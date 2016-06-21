@@ -16,7 +16,7 @@ import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
+import com.example.pabilicki.mubalootest.DataStructure.BackupSQLold;
 import com.example.pabilicki.mubalootest.DataStructure.Ceo;
 import com.example.pabilicki.mubalootest.DataStructure.Team;
 import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
@@ -34,6 +34,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private HashMap<String, List<TeamMember>> teamMembers = new HashMap<>();
     private Ceo ceo;
     ExpandableListAdapter mListAdapter;
+    private TeamMemberDetailFragment teamMemberDetailFragment;
     private final Handler mHandler = new Handler();
 
 
@@ -46,9 +47,14 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         setContentView(R.layout.main_activity);
 
         expListView = (ExpandableListView) findViewById(R.id.lv_expandable);
-//        mListAdapter = new ExpandableListAdapter(this, new ArrayList<Team>());
+        if (findViewById(R.id.team_member_detail_container) != null) {
+            teamMemberDetailFragment = new TeamMemberDetailFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.team_member_detail_container, teamMemberDetailFragment)
+                    .commit();
+        }
         mListAdapter = new ExpandableListAdapter(MainActivity.this);
-//        expListView.setAdapter(mListAdapter);
+
 
         getSupportLoaderManager().initLoader(1, null, this).forceLoad();
 
@@ -59,9 +65,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     @Override
                     public boolean onGroupClick(ExpandableListView parent, View v,
                                                 int groupPosition, long id) {
-//                        Toast.makeText(getApplicationContext(),
-//                                "Group Clicked " + teamName.get(groupPosition),
-//                                Toast.LENGTH_SHORT).show();
                         return false;
                     }
                 });
@@ -71,9 +74,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                     @Override
                     public void onGroupExpand(int groupPosition) {
-//                        Toast.makeText(getApplicationContext(),
-//                                teamName.get(groupPosition) + " Expanded",
-//                                Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -82,10 +83,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                     @Override
                     public void onGroupCollapse(int groupPosition) {
-//                        Toast.makeText(getApplicationContext(),
-//                                teamName.get(groupPosition) + " Collapsed",
-//                                Toast.LENGTH_SHORT).show();
-
+//                        teamName.get(groupPosition);
+                        if (teamMemberDetailFragment != null){
+                            teamMemberDetailFragment.resetDetails();
+                        }
                     }
                 });
 
@@ -96,23 +97,24 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     public boolean onChildClick(ExpandableListView parent, View v,
                                                 int groupPosition, int childPosition, long id) {
 
-                        Intent intent = new Intent(MainActivity.this, TeamMemberDetailActivity.class);
-
                         TeamMember teamMember = teamMembers.get(teamName.get(groupPosition)).get(childPosition);
-                        intent.putExtra("ceo", ceo.getFirstName() + " " + ceo.getLastName());
-                        intent.putExtra("teamName", teamName.get(groupPosition));
-                        intent.putExtra("Name", teamMember.getFirstName() + " " + teamMember.getLastName());
-                        intent.putExtra("Role", teamMember.getRole());
-                        intent.putExtra("ProfileImageURL", teamMember.getProfileImageURL());
-                        intent.putExtra("Description", teamMember.getDescription());
 
-                        startActivity(intent);
+                        if (teamMemberDetailFragment != null) {
+                            teamMemberDetailFragment.populateFragment(teamMember);
+                        } else {
+                            Intent intent = new Intent(MainActivity.this, TeamMemberDetailActivity.class);
 
+                            intent.putExtra("ceo", ceo.getFirstName() + " " + ceo.getLastName());
+                            intent.putExtra("teamName", teamName.get(groupPosition));
+                            intent.putExtra("teamMember", teamMember);
+
+                            startActivity(intent);
+                        }
                         return false;
                     }
                 });
-            }});
-
+            }
+        });
 
 
     }
@@ -134,8 +136,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             teamName.add(t.getTeamName());
             teamMembers.put(t.getTeamName(), t.getMembers());
         }
-        TextView tvCeo = (TextView)findViewById(R.id.tv_ceo_name);
-        ceo = BackupSQL.getCeo();
+        TextView tvCeo = (TextView) findViewById(R.id.tv_ceo_name);
+        ceo = BackupSQLold.getCeo();
         tvCeo.setText(ceo.getFirstName() + " " + ceo.getLastName());
 
     }

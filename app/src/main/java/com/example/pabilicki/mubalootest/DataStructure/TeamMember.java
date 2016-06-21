@@ -3,10 +3,12 @@ package com.example.pabilicki.mubalootest.DataStructure;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by piotr on 17.06.2016.
  */
-public class TeamMember extends JSONObject {
+public class TeamMember extends JSONObject implements Serializable {
     private String id;
     private String firstName;
     private String lastName;

@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
+import com.example.pabilicki.mubalootest.DataStructure.BackupSQLold;
 
 /**
  * Created by piotr on 19.06.2016.
@@ -35,7 +35,7 @@ public class SplashScreen extends Activity {
 
         internetConnection = haveNetworkConnection();
         dbPath = getApplicationInfo().dataDir;
-        BackupSQL.setDbPath(dbPath);
+        BackupSQLold.setDbPath(dbPath);
 
         new Handler().postDelayed(new Runnable() {
             @Override
