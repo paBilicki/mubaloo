@@ -11,9 +11,9 @@
         android:layout_height="60dp"
         android:layout_marginRight="10dp"
         android:gravity="center_vertical"
-        android:paddingLeft="80dp"
+        android:paddingLeft="60dp"
         android:text="James Frost"
         android:textColor="@color/colorMainFont"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:textStyle="italic" />
 </LinearLayout>

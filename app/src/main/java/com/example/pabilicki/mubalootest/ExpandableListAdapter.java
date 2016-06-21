@@ -2,7 +2,6 @@ package com.example.pabilicki.mubalootest;
 
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,14 +49,38 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TeamMember child = getChild(groupPosition, childPosition);
         final String teamMemberText = child.getFirstName() + " " + child.getLastName();
         TextView tvTeamMember = null;
+
+        LayoutInflater inflater = (LayoutInflater) this.context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.row_team_member, null);
+
+            convertView = inflater.inflate(R.layout.row_team_member, null);
+            convertView.setTag(child.getRole());
+
             tvTeamMember = (TextView) convertView.findViewById(R.id.tv_team_member_name);
+
             if (getChild(groupPosition, childPosition).getRole().contains("Team Lead")) {
-                convertView = infalInflater.inflate(R.layout.row_team_leader, null);
+
+                convertView = inflater.inflate(R.layout.row_team_leader, null);
+                convertView.setTag(child.getRole());
                 tvTeamMember = (TextView) convertView.findViewById(R.id.tv_team_leader_name);
+            }
+
+        } else {
+
+            if (getChild(groupPosition, childPosition).getRole().contains("Team Lead")) {
+                if (!getChild(groupPosition, childPosition).getRole().equals(convertView.getTag())) {
+                    convertView = inflater.inflate(R.layout.row_team_leader, null);
+                    convertView.setTag(child.getRole());
+                }
+                tvTeamMember = (TextView) convertView.findViewById(R.id.tv_team_leader_name);
+            } else {
+                if (!getChild(groupPosition, childPosition).getRole().equals(convertView.getTag())) {
+                    convertView = inflater.inflate(R.layout.row_team_member, null);
+                    convertView.setTag(child.getRole());
+                }
+                tvTeamMember = (TextView) convertView.findViewById(R.id.tv_team_member_name);
             }
         }
         tvTeamMember.setText(teamMemberText);
@@ -100,16 +123,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.row_team, null);
         }
-        ImageView imgTeamLogo = (ImageView)convertView.findViewById(R.id.img_team_logo);
-        if (teamName.equals("iOS")){
+        ImageView imgTeamLogo = (ImageView) convertView.findViewById(R.id.img_team_logo);
+        if (teamName.equals("iOS")) {
             imgTeamLogo.setImageResource(R.drawable.logo_ios);
-        }else if (teamName.equals("Android")){
+        } else if (teamName.equals("Android")) {
             imgTeamLogo.setImageResource(R.drawable.logo_android);
-        }else if (teamName.equals("Web")){
+        } else if (teamName.equals("Web")) {
             imgTeamLogo.setImageResource(R.drawable.logo_web);
-        }else if (teamName.equals("Design")){
+        } else if (teamName.equals("Design")) {
             imgTeamLogo.setImageResource(R.drawable.logo_design);
-        }else{
+        } else {
             imgTeamLogo.setImageResource(R.drawable.logo_placeholder);
         }
 

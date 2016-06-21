@@ -2,8 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorTeamLeaderRow"
-    android:gravity="center_vertical|center|center_horizontal"
-    android:paddingLeft="80dp">
+    android:gravity="center_vertical"
+    android:paddingLeft="40dp">
 
 
     <TextView
@@ -14,7 +14,7 @@
         android:gravity="center_vertical"
         android:text="Olly Berry"
         android:textColor="@color/colorMainFont"
-        android:textSize="30sp"
+        android:textSize="28sp"
         android:textStyle="bold|italic" />
 
     <ImageView
