@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.DataStructure;
+package com.example.pabilicki.mubalootest.data;
 
 import org.json.JSONException;
 

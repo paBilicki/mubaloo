@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.DataStructure;
+package com.example.pabilicki.mubalootest.data;
 
 
 import android.content.ContentValues;
@@ -7,10 +7,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class BackupSQL {
-    private final BackupSQLhelper opener;
+    private final BackupSqlHelper opener;
 
     public BackupSQL(Context context) {
-        opener = new BackupSQLhelper(context);
+        opener = new BackupSqlHelper(context);
     }
 
     public void insertNewJson(String json) {

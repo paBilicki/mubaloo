@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.Loader;
+package com.example.pabilicki.mubalootest.loader;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,8 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.pabilicki.mubalootest.DataStructure.Team;
-import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
+import com.example.pabilicki.mubalootest.data.Team;
 import com.example.pabilicki.mubalootest.R;
 
 import java.util.List;

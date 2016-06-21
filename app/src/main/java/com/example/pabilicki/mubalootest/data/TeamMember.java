@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.DataStructure;
+package com.example.pabilicki.mubalootest.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +14,7 @@ public class TeamMember extends JSONObject implements Serializable {
     private String lastName;
     private String role;
     private String profileImageURL;
-    private String description;
+
     private boolean teamLead = false;
 
     public TeamMember(JSONObject member) throws JSONException {
@@ -26,7 +26,6 @@ public class TeamMember extends JSONObject implements Serializable {
             this.teamLead = true;
         }
         this.profileImageURL = member.getString("profileImageURL");
-
     }
 
     public String getId() {
@@ -49,6 +48,10 @@ public class TeamMember extends JSONObject implements Serializable {
         return profileImageURL;
     }
 
+    public boolean isTeamLead() {
+        return teamLead;
+    }
+
     public String getDescription() {
         StringBuilder sb = new StringBuilder();
         sb.append("Just few lines of description about a team member")
@@ -57,5 +60,6 @@ public class TeamMember extends JSONObject implements Serializable {
                 .append("in order to fill the space in the more detailed view.");
         return sb.toString();
     }
+
 }
 

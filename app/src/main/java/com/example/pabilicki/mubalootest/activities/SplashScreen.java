@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest;
+package com.example.pabilicki.mubalootest.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.pabilicki.mubalootest.R;
+
 /**
  * Created by piotr on 19.06.2016.
  */
@@ -18,6 +20,9 @@ public class SplashScreen extends Activity {
     private String TAG = "pbBilu.SplashScreen";
     public static boolean internetConnection;
     private static int SPLASH_SCREEN_DELAY = 3000;
+    private static final String TAG_WIFI = "WIFI";
+    private static final String TAG_MOBILE = "MOBILE";
+
 
     Intent intent;
 
@@ -36,7 +41,6 @@ public class SplashScreen extends Activity {
             @Override
             public void run() {
                 Log.d(TAG, "run: ");
-//                intent = new Intent(SplashScreen.this, PersonListActivity.class);
                 intent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -51,14 +55,16 @@ public class SplashScreen extends Activity {
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+
         for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+            if (ni.getTypeName().equalsIgnoreCase(TAG_WIFI))
                 if (ni.isConnected())
                     haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+            if (ni.getTypeName().equalsIgnoreCase(TAG_MOBILE))
                 if (ni.isConnected())
                     haveConnectedMobile = true;
         }
+
         return haveConnectedWifi || haveConnectedMobile;
     }
 }

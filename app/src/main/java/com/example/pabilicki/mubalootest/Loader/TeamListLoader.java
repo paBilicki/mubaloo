@@ -1,14 +1,13 @@
-package com.example.pabilicki.mubalootest.Loader;
+package com.example.pabilicki.mubalootest.loader;
 
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.example.pabilicki.mubalootest.DataStructure.BackupSQL;
-import com.example.pabilicki.mubalootest.DataStructure.DataModel;
-import com.example.pabilicki.mubalootest.DataStructure.Team;
-import com.example.pabilicki.mubalootest.SplashScreen;
+import com.example.pabilicki.mubalootest.data.BackupSQL;
+import com.example.pabilicki.mubalootest.data.DataModel;
+import com.example.pabilicki.mubalootest.activities.SplashScreen;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +18,6 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.List;
 
 public class TeamListLoader extends AsyncTaskLoader<DataModel> {
     private String TAG = "pbBilu.TeamListLoader";

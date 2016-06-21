@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.DataStructure;
+package com.example.pabilicki.mubalootest.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,12 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by piotr on 21.06.2016.
  */
-public class BackupSQLhelper extends SQLiteOpenHelper {
+public class BackupSqlHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "MubalooTest";
     public static final int DB_VER = 1;
 
 
-    public BackupSQLhelper(Context context) {
+    public BackupSqlHelper(Context context) {
         super(context, DB_NAME, null, DB_VER);
     }
 

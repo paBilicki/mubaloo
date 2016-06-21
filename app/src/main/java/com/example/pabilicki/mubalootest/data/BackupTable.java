@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.DataStructure;
+package com.example.pabilicki.mubalootest.data;
 
 /**
  * Created by piotr on 21.06.2016.
