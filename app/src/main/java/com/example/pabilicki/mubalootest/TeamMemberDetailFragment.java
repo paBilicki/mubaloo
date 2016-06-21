@@ -21,6 +21,7 @@ public class TeamMemberDetailFragment extends Fragment {
     private String ceo, teamName, teamMemberName, teamMemberRole, teamMemberURL, teamMemberDescription;
     private LinearLayout memberDetailedRow, memberDetailedDescription;
     private String TAG = "pbBilu.TeamMemberDetailFragment";
+    private TeamMember teamMember;
 
     @Nullable
     @Override
@@ -29,19 +30,39 @@ public class TeamMemberDetailFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (teamMember!= null){
+            outState.putSerializable("teamMember", teamMember);
+        }
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        memberDetailedRow = (LinearLayout)getView().findViewById(R.id.member_detail_row);
-        memberDetailedDescription = (LinearLayout)getView().findViewById(R.id.member_detail_description);
+
+        memberDetailedRow = (LinearLayout) getView().findViewById(R.id.member_detail_row);
+        memberDetailedDescription = (LinearLayout) getView().findViewById(R.id.member_detail_description);
         imgDetailsDefault = (ImageView) getView().findViewById(R.id.img_profile_details_default);
         tvTeamMemberName = (TextView) getView().findViewById(R.id.tv_team_member_name_details);
         tvTeamMemberRole = (TextView) getView().findViewById(R.id.tv_team_member_role_details);
         tvTeamMemberDescription = (TextView) getView().findViewById(R.id.tv_team_member_description_details);
         imgProfileImg = (ImageView) getView().findViewById(R.id.img_profile_details);
         imgCptArmband = (ImageView) getView().findViewById(R.id.img_cpt_armband_details);
+
+        TeamMember lastDisplay = null;
+
+        // Restoring last team member
+        if ((savedInstanceState != null) && (savedInstanceState.containsKey("teamMember"))) {
+            lastDisplay = (TeamMember) savedInstanceState.getSerializable("teamMember");
+            populateFragment(lastDisplay);
+        }
+
     }
 
-    public void populateFragment(TeamMember teamMember) {
 
+    public void populateFragment(TeamMember teamMember) {
+        this.teamMember = teamMember;
         hideDefault();
         showDetails();
 
@@ -56,7 +77,7 @@ public class TeamMemberDetailFragment extends Fragment {
 
         if (teamMemberRole.contains("Team Lead")) {
             imgCptArmband.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             imgCptArmband.setVisibility(View.GONE);
         }
 
@@ -68,7 +89,7 @@ public class TeamMemberDetailFragment extends Fragment {
         }
     }
 
-    public void resetDetails(){
+    public void resetDetails() {
         imgDetailsDefault.setVisibility(View.VISIBLE);
         memberDetailedRow.setVisibility(View.GONE);
         memberDetailedDescription.setVisibility(View.GONE);
@@ -80,7 +101,7 @@ public class TeamMemberDetailFragment extends Fragment {
         memberDetailedDescription.setVisibility(View.VISIBLE);
     }
 
-    public void hideDefault(){
+    public void hideDefault() {
         imgDetailsDefault.setVisibility(View.GONE);
     }
 }
