@@ -21,7 +21,6 @@ import com.example.pabilicki.mubalootest.DataStructure.Ceo;
 import com.example.pabilicki.mubalootest.DataStructure.Team;
 import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
 import com.example.pabilicki.mubalootest.Loader.TeamListLoader;
-import com.example.pabilicki.mubalootest.Loader.TeamMemberDetailActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +95,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     @Override
                     public boolean onChildClick(ExpandableListView parent, View v,
                                                 int groupPosition, int childPosition, long id) {
-
 
                         Intent intent = new Intent(MainActivity.this, TeamMemberDetailActivity.class);
 

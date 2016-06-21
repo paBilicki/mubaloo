@@ -7,38 +7,15 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorCeoBackground"
-        android:orientation="vertical">
+        layout="@layout/ceo_header"/>
 
-        <TextView
-            android:id="@+id/tv_ceo_name"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:gravity="bottom|center_horizontal"
-            android:text=""
-            android:textColor="@color/colorCeoFont"
-            android:textSize="35sp"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/tv_ceo"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="top|center_horizontal"
-            android:text="Chief Executive Officer"
-            android:textColor="@color/colorMainFont"
-            android:textSize="16sp"
-            android:textStyle="bold|italic" />
-
-    </LinearLayout>
-
-    <ExpandableListView
-        android:id="@+id/lv_expandable"
+    <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="@color/colorTeamRow" />
+        layout="@layout/expandable_list_view"/>
 
 </LinearLayout>

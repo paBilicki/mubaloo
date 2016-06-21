@@ -61,7 +61,6 @@ public class TeamListAdapter extends ArrayAdapter<Team> {
     public void setData(List<Team> data) {
         if (data != null) {
             clear();
-            // we add each item individually instead of using addAll() for backward compatibility
             for (Team team : data) {
                 add(team);
             }

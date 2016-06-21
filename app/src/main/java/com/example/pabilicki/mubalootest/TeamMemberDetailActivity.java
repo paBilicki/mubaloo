@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.Loader;
+package com.example.pabilicki.mubalootest;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.pabilicki.mubalootest.R;
 
 import java.io.InputStream;
 
@@ -43,8 +41,7 @@ public class TeamMemberDetailActivity extends Activity {
         teamName = getIntent().getStringExtra("teamName");
         teamMemberName = getIntent().getStringExtra("Name");
         teamMemberRole = getIntent().getStringExtra("Role");
-//        teamMemberURL = getIntent().getStringExtra("ProfileImageURL");
-        teamMemberURL = "http://iconshow.me/media/images/ui/ios7-icons/png/512/social-android-outline.png";
+        teamMemberURL = getIntent().getStringExtra("ProfileImageURL");
         teamMemberDescription = getIntent().getStringExtra("Description");
         tvCeo.setText(ceo);
         tvTeamName.setText(teamName);
@@ -72,34 +69,8 @@ public class TeamMemberDetailActivity extends Activity {
             imgProfileImg.setImageResource(R.drawable.profile_placeholder);
         } else {
             // TODO: 21.06.2016 downloading a resource
-            new DownloadImageTask((ImageView) findViewById(R.id.img_profile_details))
-                    .execute("http://java.sogeti.nl/JavaBlog/wp-content/uploads/2009/04/android_icon_256.png");
         }
     }
 
 
-    protected class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView imgToUpdate;
-
-        public DownloadImageTask(ImageView img) {
-            this.imgToUpdate = img;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            imgToUpdate.setImageBitmap(result);
-        }
-    }
 }
