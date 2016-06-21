@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.pabilicki.mubalootest.DataStructure.BackupSQLold;
-
 /**
  * Created by piotr on 19.06.2016.
  */
@@ -21,7 +19,6 @@ public class SplashScreen extends Activity {
     public static boolean internetConnection;
     private static int SPLASH_SCREEN_DELAY = 3000;
 
-    private String dbPath;
     Intent intent;
 
     @Override
@@ -34,8 +31,6 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.mubaloo_splash_screen);
 
         internetConnection = haveNetworkConnection();
-        dbPath = getApplicationInfo().dataDir;
-        BackupSQLold.setDbPath(dbPath);
 
         new Handler().postDelayed(new Runnable() {
             @Override

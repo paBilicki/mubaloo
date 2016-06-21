@@ -21,7 +21,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 
-public class TeamListLoader extends AsyncTaskLoader<List<Team>> {
+public class TeamListLoader extends AsyncTaskLoader<DataModel> {
     private String TAG = "pbBilu.TeamListLoader";
     private BackupSQL backupSQL;
 
@@ -30,7 +30,7 @@ public class TeamListLoader extends AsyncTaskLoader<List<Team>> {
     }
 
     @Override
-    public List<Team> loadInBackground() {
+    public DataModel loadInBackground() {
         try {
             BackupSQL backupSQL = new BackupSQL(getContext());
             JSONArray fetchedJson = new JSONArray();
@@ -54,8 +54,8 @@ public class TeamListLoader extends AsyncTaskLoader<List<Team>> {
 
             DataModel fetchedData = new DataModel(fetchedJson);
 
-            List<Team> result = fetchedData.getAllTeams();
-            return result;
+//            List<Team> result = fetchedData.getAllTeams();
+            return fetchedData;
 
         } catch (JSONException e) {
             e.getMessage();

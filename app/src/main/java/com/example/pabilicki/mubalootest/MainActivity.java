@@ -16,18 +16,20 @@ import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pabilicki.mubalootest.DataStructure.BackupSQLold;
 import com.example.pabilicki.mubalootest.DataStructure.Ceo;
+import com.example.pabilicki.mubalootest.DataStructure.DataModel;
 import com.example.pabilicki.mubalootest.DataStructure.Team;
 import com.example.pabilicki.mubalootest.DataStructure.TeamMember;
 import com.example.pabilicki.mubalootest.Loader.TeamListLoader;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Team>> {
+public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<DataModel> {
     private String TAG = "pbBilu.MainActivity";
     ExpandableListView expListView;
     private List<String> teamName = new ArrayList<>();
@@ -84,7 +86,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     @Override
                     public void onGroupCollapse(int groupPosition) {
 //                        teamName.get(groupPosition);
-                        if (teamMemberDetailFragment != null){
+                        if (teamMemberDetailFragment != null) {
                             teamMemberDetailFragment.resetDetails();
                         }
                     }
@@ -120,15 +122,17 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public Loader<List<Team>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<DataModel> onCreateLoader(int i, Bundle bundle) {
         Log.d(TAG, "onCreateLoader: ");
         return new TeamListLoader(MainActivity.this);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Team>> loader, List<Team> teams) {
-//        mListAdapter = new ExpandableListAdapter(MainActivity.this, teams);
+    public void onLoadFinished(Loader<DataModel> loader, DataModel dataModel) {
+
+        List<Team> teams = dataModel.getAllTeams();
         Log.d(TAG, "onLoadFinished: teams: " + teams.size());
+
         mListAdapter.setData(teams);
         expListView.setAdapter(mListAdapter);
         for (Team t : teams) {
@@ -137,13 +141,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             teamMembers.put(t.getTeamName(), t.getMembers());
         }
         TextView tvCeo = (TextView) findViewById(R.id.tv_ceo_name);
-        ceo = BackupSQLold.getCeo();
+        try {
+            ceo = dataModel.getCeo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         tvCeo.setText(ceo.getFirstName() + " " + ceo.getLastName());
-
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Team>> loader) {
+    public void onLoaderReset(Loader<DataModel> loader) {
         Log.d(TAG, "onLoaderReset: ");
         mListAdapter.setData(new ArrayList<Team>());
     }
