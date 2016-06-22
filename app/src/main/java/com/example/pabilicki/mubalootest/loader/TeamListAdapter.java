@@ -23,12 +23,12 @@ import java.util.List;
  * @author Piotr Aleksander Bilicki
  */
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class TeamListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> teamName = new ArrayList<>();
     private HashMap<String, List<TeamMember>> teamMembers = new HashMap<>();
 
-    public ExpandableListAdapter(Context context) {
+    public TeamListAdapter(Context context) {
         this.context = context;
     }
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.example.pabilicki.mubalootest.activities.SplashScreen;
-import com.example.pabilicki.mubalootest.data.BackupSQL;
+import com.example.pabilicki.mubalootest.sql.BackupSql;
 import com.example.pabilicki.mubalootest.data.DataModel;
 
 import org.json.JSONArray;
@@ -25,7 +25,7 @@ import java.nio.charset.Charset;
  * @author Piotr Aleksander Bilicki
  */
 public class TeamListLoader extends AsyncTaskLoader<DataModel> {
-    private BackupSQL backupSQL;
+    private BackupSql backupSql;
 
     public TeamListLoader(Context context) {
         super(context);
@@ -34,17 +34,17 @@ public class TeamListLoader extends AsyncTaskLoader<DataModel> {
     @Override
     public DataModel loadInBackground() {
         try {
-            backupSQL = new BackupSQL(getContext());
+            backupSql = new BackupSql(getContext());
             JSONArray downloadedJson;
             String jsonString;
 
             // Checking if there is Internet connection to download the json file
             if (SplashScreen.internetConnection) {
                 jsonString = downloadData();
-                backupSQL.insertNewJson(jsonString);
+                backupSql.insertNewJson(jsonString);
             } else {
                 // retrieving json from the last saved record
-                jsonString = backupSQL.getBackupJson();
+                jsonString = backupSql.getBackupJson();
             }
 
             downloadedJson = new JSONArray(jsonString);
@@ -53,9 +53,8 @@ public class TeamListLoader extends AsyncTaskLoader<DataModel> {
             return dataModel;
 
         } catch (Exception e) {
+            return null;
         }
-
-        return null;
     }
 
     /**

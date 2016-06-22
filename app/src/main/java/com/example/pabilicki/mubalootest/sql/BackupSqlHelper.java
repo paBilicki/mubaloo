@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.data;
+package com.example.pabilicki.mubalootest.sql;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

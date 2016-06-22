@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.data;
+package com.example.pabilicki.mubalootest.sql;
 
 /**
  * Model of the table that contains 2 columns:

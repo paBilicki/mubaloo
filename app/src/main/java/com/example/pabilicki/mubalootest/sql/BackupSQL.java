@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.data;
+package com.example.pabilicki.mubalootest.sql;
 
 
 import android.content.ContentValues;
@@ -11,10 +11,10 @@ import android.database.sqlite.SQLiteDatabase;
  *
  * @author Piotr Aleksander Bilicki
  */
-public class BackupSQL {
+public class BackupSql {
     private final BackupSqlHelper opener;
 
-    public BackupSQL(Context context) {
+    public BackupSql(Context context) {
         opener = new BackupSqlHelper(context);
     }
 

@@ -8,15 +8,63 @@
     android:orientation="vertical"
     android:screenOrientation="portrait">
 
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/ceo_header"/>
-
-    <include
+    <LinearLayout
+        android:id="@+id/ll_error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        layout="@layout/expandable_list_view"/>
+        android:background="@color/colorTeamLeaderRow"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorTeamLeaderRow"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_error_msg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="error"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/colorTeamLeaderRow"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_retry"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Retry"
+                android:layout_margin="10dp"/>
+
+            <Button
+                android:id="@+id/btn_quit"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Quit"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        layout="@layout/ceo_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <include
+        layout="@layout/expandable_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>
