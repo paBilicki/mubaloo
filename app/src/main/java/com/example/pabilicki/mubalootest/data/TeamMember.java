@@ -29,7 +29,6 @@ public class TeamMember extends JSONObject implements Serializable {
      * sets the fields of a single team member
      *
      * @param member part of the downloaded json describing a single member
-     * @throws JSONException
      */
     public TeamMember(JSONObject member) throws JSONException {
         this.id = member.getString(KEY_ID);
