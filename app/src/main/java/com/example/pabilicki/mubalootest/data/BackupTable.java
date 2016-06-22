@@ -1,7 +1,11 @@
 package com.example.pabilicki.mubalootest.data;
 
 /**
- * Created by piotr on 21.06.2016.
+ * Model of the table that contains 2 columns:
+ * 1. with the auto-incremented id
+ * 2. with the downloaded String in json format
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class BackupTable {
     public static final String TABLE_NAME = "backup";

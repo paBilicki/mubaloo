@@ -5,7 +5,9 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 /**
- * Created by piotr on 17.06.2016.
+ * Model of the team object containing name of the team and list of members of the team
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class Team {
     public static final String TEAM_IOS = "iOS";

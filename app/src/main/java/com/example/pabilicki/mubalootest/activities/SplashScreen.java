@@ -13,7 +13,9 @@ import android.view.WindowManager;
 import com.example.pabilicki.mubalootest.R;
 
 /**
- * Created by piotr on 19.06.2016.
+ * Display a logo and checks if there is internet connection
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class SplashScreen extends Activity {
     public static boolean internetConnection;

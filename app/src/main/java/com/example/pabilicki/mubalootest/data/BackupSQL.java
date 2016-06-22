@@ -6,6 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Handling operations on the SQL base
+ *
+ * @author Piotr Aleksander Bilicki
+ */
 public class BackupSQL {
     private final BackupSqlHelper opener;
 
@@ -13,6 +18,11 @@ public class BackupSQL {
         opener = new BackupSqlHelper(context);
     }
 
+    /**
+     * inserts a json string to the db
+     *
+     * @param json saved in the database
+     */
     public void insertNewJson(String json) {
         final SQLiteDatabase db = opener.getWritableDatabase();
 
@@ -27,9 +37,16 @@ public class BackupSQL {
         }
     }
 
+    /**
+     * Retrieves json string from the database
+     *
+     * @return String from the database in json format
+     */
     public String getBackupJson() {
         String backupJson = null;
         final SQLiteDatabase db = opener.getReadableDatabase();
+
+        //taking the latest record from the db
         String query = "select * from " + BackupTable.TABLE_NAME + " order by id desc";
         final Cursor cursor = db.rawQuery(query, null);
 

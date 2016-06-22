@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import com.example.pabilicki.mubalootest.R;
 
 /**
- * Created by piotr on 21.06.2016.
+ * Implements the custom ActionBar
+ *
+ * @author Piotr Aleksander Bilicki
  */
-public class BaseActionBarActivity extends FragmentActivity {
+public abstract class BaseActionBarActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

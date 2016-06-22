@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -20,6 +19,7 @@ import com.example.pabilicki.mubalootest.data.Team;
 import com.example.pabilicki.mubalootest.data.TeamMember;
 import com.example.pabilicki.mubalootest.loader.ExpandableListAdapter;
 import com.example.pabilicki.mubalootest.loader.TeamListLoader;
+import com.example.pabilicki.mubalootest.loader.TeamMemberDetailFragment;
 
 import org.json.JSONException;
 
@@ -27,7 +27,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * main view of the application displaying expandable list with teams and team members
+ *
+ * @author Piotr Aleksander Bilicki
+ */
 public class MainActivity extends BaseActionBarActivity implements LoaderManager.LoaderCallbacks<DataModel> {
     private TeamMemberDetailFragment teamMemberDetailFragment;
     private List<String> teamName = new ArrayList<>();
@@ -114,6 +118,7 @@ public class MainActivity extends BaseActionBarActivity implements LoaderManager
     public Loader<DataModel> onCreateLoader(int i, Bundle bundle) {
         return new TeamListLoader(MainActivity.this);
     }
+
 
     @Override
     public void onLoadFinished(Loader<DataModel> loader, DataModel dataModel) {

@@ -4,7 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by piotr on 17.06.2016.
+ * Model of the ceo object
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class Ceo extends TeamMember{
     private final String role = "CEO";

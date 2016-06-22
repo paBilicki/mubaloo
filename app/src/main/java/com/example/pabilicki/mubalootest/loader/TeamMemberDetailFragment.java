@@ -1,4 +1,4 @@
-package com.example.pabilicki.mubalootest.activities;
+package com.example.pabilicki.mubalootest.loader;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +15,9 @@ import com.example.pabilicki.mubalootest.data.DataModel;
 import com.example.pabilicki.mubalootest.data.TeamMember;
 
 /**
- * Created by piotr on 21.06.2016.
+ * Fragment containing details about the chosen team member
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class TeamMemberDetailFragment extends Fragment {
     private TextView tvTeamMemberName, tvTeamMemberRole, tvTeamMemberDescription;
@@ -110,7 +112,6 @@ public class TeamMemberDetailFragment extends Fragment {
         memberDetailedRow.setVisibility(View.VISIBLE);
         memberDetailedDescription.setVisibility(View.VISIBLE);
     }
-
 
     public void hideDefault() {
         imgDetailsDefault.setVisibility(View.GONE);

@@ -17,6 +17,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Adapter used in order to populate the expandable list with the result from the TeamListLoader
+ *
+ * @author Piotr Aleksander Bilicki
+ */
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> teamName = new ArrayList<>();
@@ -113,7 +119,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.row_team, null);
         }
         ImageView imgTeamLogo = (ImageView) convertView.findViewById(R.id.img_team_logo);
-        switch (teamName){
+        switch (teamName) {
             case Team.TEAM_IOS:
                 imgTeamLogo.setImageResource(R.drawable.logo_ios);
                 break;

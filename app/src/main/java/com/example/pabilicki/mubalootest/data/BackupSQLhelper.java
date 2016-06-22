@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by piotr on 21.06.2016.
+ * SQLiteOpenHelper class to create a database based on the BackupTable class
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class BackupSqlHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "MubalooTest";

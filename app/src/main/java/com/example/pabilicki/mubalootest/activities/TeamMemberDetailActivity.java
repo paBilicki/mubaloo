@@ -8,10 +8,14 @@ import com.example.pabilicki.mubalootest.R;
 import com.example.pabilicki.mubalootest.data.DataModel;
 import com.example.pabilicki.mubalootest.data.Team;
 import com.example.pabilicki.mubalootest.data.TeamMember;
+import com.example.pabilicki.mubalootest.loader.TeamMemberDetailFragment;
 
 
 /**
- * Created by piotr on 20.06.2016.
+ * A view containing information about the CEO, Team and a Fragment with details
+ * of a team member chosen from the expandable list
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class TeamMemberDetailActivity extends BaseActionBarActivity {
     private TextView tvCeo, tvTeamName;

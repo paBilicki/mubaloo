@@ -6,7 +6,9 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 /**
- * Created by piotr on 17.06.2016.
+ * Model of the team member object
+ *
+ * @author Piotr Aleksander Bilicki
  */
 public class TeamMember extends JSONObject implements Serializable {
     private final static String KEY_ID = "id";
@@ -23,6 +25,12 @@ public class TeamMember extends JSONObject implements Serializable {
 
     private boolean teamLead = false;
 
+    /**
+     * sets the fields of a single team member
+     *
+     * @param member part of the downloaded json describing a single member
+     * @throws JSONException
+     */
     public TeamMember(JSONObject member) throws JSONException {
         this.id = member.getString(KEY_ID);
         this.firstName = member.getString(KEY_FIRST_NAME);

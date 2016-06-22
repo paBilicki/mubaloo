@@ -1,6 +1,5 @@
 package com.example.pabilicki.mubalootest.data;
 
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,15 +7,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/*
-* @see
-*
-* */
+/**
+ * Main class of the data package that creates the model of the company using the downloaded
+ * (or loaded from the db) json for further processing and displaying
+ *
+ * @author Piotr Aleksander Bilicki
+ */
 public class DataModel {
     private static final String KEY_MEMBERS = "members";
     public static final String KEY_TEAM_NAME = "teamName";
     public static final String PARAM_CEO = "ceo";
     public static final String PARAM_TEAM_MEMBER_SERIALIZABLE = "teamMember";
+    public static final String JSON_URL = "http://developers.mub.lu/resources/team.json";
 
     private JSONArray data;
     private ArrayList<Team> allTeams = new ArrayList<>();
@@ -33,6 +35,13 @@ public class DataModel {
         ceo = new Ceo(data.getJSONObject(0));
     }
 
+
+    /**
+     * function called from the constructor that finds team name in the json and call parsingPeople
+     * function in order to take corresponding team members
+     *
+     * @throws JSONException
+     */
     private void parsingTeams() throws JSONException {
         for (int i = 1; i < data.length(); i++) {
             JSONObject teamData = data.getJSONObject(i);
@@ -42,9 +51,11 @@ public class DataModel {
     }
 
     /**
-     * @doc
-     * @param teamName
-     * @param teamData
+     * function called from parsingTeams that adds each team member to the corresponding team
+     * and afterwards each team to the ArrayList of teams
+     *
+     * @param teamName name of the team
+     * @param teamData part of the json containing information about the team
      * @throws JSONException
      */
     private void parsingPeople(String teamName, JSONObject teamData) throws JSONException {
